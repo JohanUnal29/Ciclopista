@@ -1,0 +1,97 @@
+body {
+    font-family: arial, helvetica;
+  }
+  
+  .titulo{
+    color: rgb(245, 60, 60);
+  }
+  
+  .subtitulo{
+    color: white;
+  }
+  
+  h3 {
+    font-size: 5em;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  #section1 {
+    color: #fff;
+  }
+  
+  .fp-section {
+    text-align: center;
+  }
+  
+  button {
+    padding: 0.93em 1.87em;
+    background: #35495e;
+    border-radius: 5px;
+    border-color: transparent;
+    display: block;
+    color: #fff;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: 0.85em;
+  }
+  
+  .actions {
+    list-style-type: none;
+  }
+  
+  .actions button {
+    padding: 0.93em 1.87em;
+    background: #35495e;
+    border-radius: 5px;
+    border: 0;
+    color: #fff;
+    margin: 7px;
+    font-size: 15px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .actions button:hover {
+    background: #fff;
+    color: #35495e;
+  }
+  
+  .custom-section:nth-child(1) {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("https://drive.google.com/uc?export=download&id=1YGy51tBdIHq_yw1G1jszgYorOeQhsIjh") no-repeat center center;
+    background-size: cover;
+  }
+  
+  .custom-section:nth-child(2) {
+  
+    background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(241, 155, 155, 1) 35%);
+  }
+  
+  
+  .fp-arrow.fp-next {
+    border-color: transparent transparent transparent #000;
+  }
+  
+  .fp-arrow.fp-prev {
+    border-color: transparent #000 transparent transparent;
+  }
+  
+  .slide-image {
+    width: 600px; /* Hace que la imagen ocupe el 100% del ancho del contenedor */
+    height: 600px; /* Ajusta automáticamente la altura para mantener la proporción */
+  
+    /* Estilos específicos para pantallas menores a 888px */
+    @media (max-width: 888px) {
+      width: 400px;
+      height: 400px;
+    }
+  }
+  
+  
+  

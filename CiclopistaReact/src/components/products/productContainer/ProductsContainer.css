@@ -1,0 +1,12 @@
+.item-card {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ver-mas {
+    color: white;
+    background-color: black;
+}

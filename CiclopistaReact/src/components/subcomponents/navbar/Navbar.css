@@ -1,0 +1,38 @@
+.nav-grande2 {
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(270deg, rgba(241,155,155,1) 10%, rgba(154,167,237,1) 90%);
+
+}
+
+.logotipoo {
+  width: 100px;
+  height: 50px;
+}
+
+.Menu {
+  color: black;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.Menu:hover {
+  color: white;
+}
+
+.Cerrar {
+  color: black;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.Cerrar:hover {
+  color: red;
+}
+
+@media only screen and (max-width: 992px) {
+  .nav-grande2 {
+      width: 100%;
+      height: 100%;
+  }
+}

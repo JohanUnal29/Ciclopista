@@ -3,6 +3,8 @@ import { ticketService } from "../DAO/mongo/services/tickets.service.js";
 import { productService } from "../DAO/mongo/services/products.service.js";
 import ticketsModel from "../DAO/mongo/models/tickets.model.js";
 import TicketDTO from "../DAO/DTO/tickets.dto.js";
+import CustomError from "../DAO/mongo/services/errors/custom-error.js";
+import EErros from "../DAO/mongo/services/errors/enum.js";
 
 class TicketController {
 
@@ -11,9 +13,12 @@ class TicketController {
             const tickets = await ticketService.getTickets();
 
             if (!tickets) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "tickets was not found" });
+                CustomError.createError({
+                    name: "Error-tickets",
+                    cause: "Tickets was not found",
+                    message: "Tickets was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -22,9 +27,11 @@ class TicketController {
                 payload: tickets,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching tickets",
+            CustomError.createError({
+                name: "Error-tickets",
+                cause: "An error occurred while fetching tickets",
+                message: "An error occurred while fetching tickets",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -35,20 +42,25 @@ class TicketController {
             const ticket = await ticketService.getTicketById(ticketId);
 
             if (!ticket) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "ticket was not found" });
+                CustomError.createError({
+                    name: "Error-ticket-by-id",
+                    cause: "Ticket was not found",
+                    message: "Ticket was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
-                status: "success",
-                message: "ticket found",
+                status: "Success",
+                message: "Ticket found",
                 payload: ticket,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching ticket by ID",
+            CustomError.createError({
+                name: "Error-ticket-by-id",
+                cause: "An error occurred while fetching ticket by ID",
+                message: "An error occurred while fetching ticket by ID",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -59,9 +71,12 @@ class TicketController {
             const tickets = await ticketService.getTicketsByStatus(ticketsStatus);
 
             if (!tickets) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "ticket was not found" });
+                CustomError.createError({
+                    name: "Error-tickets-by-status",
+                    cause: "Tickets was not found",
+                    message: "Tickets was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -70,9 +85,11 @@ class TicketController {
                 payload: tickets,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching tickets by status",
+            CustomError.createError({
+                name: "Error-ticket-by-status",
+                cause: "An error occurred while fetching ticket by status",
+                message: "An error occurred while fetching ticket by status",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -96,7 +113,12 @@ class TicketController {
                     await ticketService.updateProducts(cartItem._id, cartItem.cantidad);
                     updatedCart.push(cartItem);
                 } else {
-                    console.log(`Product with ID ${cartItem._id} is out of stock or not found.`);
+                    CustomError.createError({
+                        name: "Error-add-product-to-the-cart",
+                        cause: `Product with ID ${cartItem._id} is out of stock or not found.`,
+                        message: `Product with ID ${cartItem._id} is out of stock or not found.`,
+                        code: EErros.ADDPRODUCT_TO_CART_ERORR,
+                    });
                 }
             }
 
@@ -104,9 +126,11 @@ class TicketController {
             await ticketService.addTicket(ticketDTO);
             return res.send({ status: "OK", message: "Ticket successfully added" });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while adding the ticket",
+            CustomError.createError({
+                name: "Error-add-product-to-the-cart",
+                cause: `Product is out of stock or not found.`,
+                message: `Product with ID is out of stock or not found.`,
+                code: EErros.ADDPRODUCT_TO_CART_ERORR,
             });
         }
     }
@@ -119,9 +143,12 @@ class TicketController {
             const updatedTicket = await ticketService.updateTicket(ticketId, changes);
 
             if (!updatedTicket) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "Ticket was not found" });
+                CustomError.createError({
+                    name: "Error-update-ticket",
+                    cause: "Ticket was not found",
+                    message: "Ticket was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -129,9 +156,11 @@ class TicketController {
                 message: "Ticket successfully updated",
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while updating the ticket",
+            CustomError.createError({
+                name: "Error-update-ticket",
+                cause: "An error occurred while updating ticket",
+                message: "An error occurred while updating ticket",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -142,16 +171,21 @@ class TicketController {
             const deletedTicket = await ticketService.deleteTicket(ticketId);
 
             if (!deletedTicket) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "Ticket does not exist" });
+                CustomError.createError({
+                    name: "Error-delete-ticket",
+                    cause: "Ticket does not exists",
+                    message: "Ticket does not exists",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({ status: "OK", message: "Ticket deleted successfully" });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while deleting the ticket",
+            CustomError.createError({
+                name: "Error-delete-ticket",
+                cause: "An error occurred while deleting ticket",
+                message: "An error occurred while deleting ticket",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -162,9 +196,12 @@ class TicketController {
             const userWithOrders = await ticketService.getTicketsByUser(userEmail);
 
             if (!userEmail) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "user was not found" });
+                CustomError.createError({
+                    name: "Error-user",
+                    cause: "User does not exists",
+                    message: "User does not exists",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -173,9 +210,11 @@ class TicketController {
                 payload: userWithOrders,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching ticket by ID",
+            CustomError.createError({
+                name: "Error-user",
+                cause: "An error occurred while fetching ticket by ID",
+                message: "An error occurred while fetching ticket by ID",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }

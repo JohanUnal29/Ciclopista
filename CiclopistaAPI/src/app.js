@@ -1,9 +1,11 @@
 import express from 'express';
 import path from 'path';
+import compression from "express-compression";
 import { __dirname } from "./config.js";
 import { connectMongo } from "./utils/db.js";
 import MongoStore from 'connect-mongo';
 import productRouter from "./routes/product.router.js";
+import mockingproducts from "./routes/mockingproducts.router.js"
 import ticketsRouter from "./routes/tickets.router.js";
 import { sessionGoogleRouter } from './routes/sessionGoogle.router.js';
 import passport from 'passport';
@@ -11,6 +13,7 @@ import { iniPassport } from './utils/passport.config.js';
 import session from 'express-session';
 import cors from 'cors';
 import { entorno } from './config.js';
+import erroHandler from "./middlewares/error.js";
 
 const app = express();
 const port = entorno.PORT;
@@ -21,6 +24,12 @@ const httpServer = app.listen(port, () => {
 });
 
 connectMongo();
+
+// app.use(
+//   compression({
+//     brotli: { enabled: true, zlib: {} },
+//   })
+// );
 
 // connectSocket(httpServer);
 
@@ -46,6 +55,8 @@ app.use('/api/products', productRouter);
 app.use('/api/purchase', ticketsRouter);
 app.use('/api/sessionsGoogle', sessionGoogleRouter);
 
+app.use('/mockingproducts', mockingproducts);
+
 app.get('*', (req, res) => {
   return res.status(404).json({
     status: 'error',
@@ -53,3 +64,5 @@ app.get('*', (req, res) => {
     data: {},
   });
 });
+
+app.use(erroHandler);

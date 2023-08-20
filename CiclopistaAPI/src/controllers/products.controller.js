@@ -1,5 +1,7 @@
 import { productService } from "../DAO/mongo/services/products.service.js";
 import ProductDTO from "../DAO/DTO/products.dto.js";
+import CustomError from "../DAO/mongo/services/errors/custom-error.js";
+import EErros from "../DAO/mongo/services/errors/enum.js";
 
 class ProductController {
     async getPaginatedProducts(req, res) {
@@ -12,20 +14,25 @@ class ProductController {
             const products = await productService.getPaginatedProducts(page, query, ITEMS_PER_PAGE);
 
             if (!products) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "products was not found" });
+                CustomError.createError({
+                    name: "Error-products",
+                    cause: "Products was not found",
+                    message: "Products was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
-                status: "success",
-                message: "product found",
+                status: "Success",
+                message: "Product found",
                 payload: products,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching paginated products",
+            CustomError.createError({
+                name: "Error-products",
+                cause: "An error occurred while fetching products",
+                message: "An error occurred while fetching products",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -35,20 +42,25 @@ class ProductController {
             const products = await productService.getProducts();
 
             if (!products) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "products was not found" });
+                CustomError.createError({
+                    name: "Error-products",
+                    cause: "Products was not found",
+                    message: "Products was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
-                status: "success",
-                message: "product found",
+                status: "Success",
+                message: "Product found",
                 payload: products,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching products",
+            CustomError.createError({
+                name: "Error-products",
+                cause: "An error occurred while fetching products",
+                message: "An error occurred while fetching products",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -59,9 +71,12 @@ class ProductController {
             const products = await productService.getProductsByCategory(productsCategory);
 
             if (!products) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "product was not found" });
+                CustomError.createError({
+                    name: "Error-product-by-status",
+                    cause: "product was not found",
+                    message: "product was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -70,9 +85,11 @@ class ProductController {
                 payload: products,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching products by category",
+            CustomError.createError({
+                name: "Error-product-by-status",
+                cause: "An error occurred while fetching product by category",
+                message: "An error occurred while fetching product by category",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -83,20 +100,25 @@ class ProductController {
             const product = await productService.getProductById(productId);
 
             if (!product) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "product was not found" });
+                CustomError.createError({
+                    name: "Error-product-by-id",
+                    cause: "Product was not found",
+                    message: "Product was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
-                status: "success",
-                message: "product found",
+                status: "Success",
+                message: "Product found",
                 payload: product,
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while fetching product by ID",
+            CustomError.createError({
+                name: "Error-product-by-id",
+                cause: "An error occurred while fetching product by ID",
+                message: "An error occurred while fetching product by ID",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -110,9 +132,11 @@ class ProductController {
             await productService.addProduct(productDTO);
             return res.send({ status: "OK", message: "Product successfully added" });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "Error, failed to add the add",
+            CustomError.createError({
+                name: "Error-add-product",
+                cause: "Error, failed to add the add",
+                message: "Error, failed to add the add",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -125,9 +149,12 @@ class ProductController {
             const updatedProduct = await productService.updateProduct(productId, changes);
 
             if (!updatedProduct) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "product was not found" });
+                CustomError.createError({
+                    name: "Error-update-product",
+                    cause: "product was not found",
+                    message: "product was not found",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({
@@ -135,9 +162,11 @@ class ProductController {
                 message: "Product successfully updated",
             });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while updating product",
+            CustomError.createError({
+                name: "Error-update-product",
+                cause: "An error occurred while updating product",
+                message: "An error occurred while updating product",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }
@@ -148,16 +177,21 @@ class ProductController {
             const deletedProduct = await productService.deleteProduct(productId);
 
             if (!deletedProduct) {
-                return res
-                    .status(404)
-                    .send({ status: "Error", error: "Product does not exist" });
+                CustomError.createError({
+                    name: "Error-delete-product",
+                    cause: "product does not exists",
+                    message: "product does not exists",
+                    code: EErros.DATABASES_READ_ERROR,
+                });
             }
 
             return res.send({ status: "OK", message: "Product deleted successfully" });
         } catch (error) {
-            return res.status(500).send({
-                status: "Error",
-                error: "An error occurred while deleting product",
+            CustomError.createError({
+                name: "Error-delete-product",
+                cause: "An error occurred while deleting product",
+                message: "An error occurred while deleting product",
+                code: EErros.DATABASES_READ_ERROR,
             });
         }
     }

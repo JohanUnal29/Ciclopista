@@ -14,6 +14,7 @@ import session from 'express-session';
 import cors from 'cors';
 import { entorno } from './config.js';
 import erroHandler from "./middlewares/error.js";
+import { addLogger } from './utils/logger.js';
 
 const app = express();
 const port = entorno.PORT;
@@ -63,6 +64,60 @@ app.get('*', (req, res) => {
     msg: 'no encontrado',
     data: {},
   });
+});
+
+app.use(addLogger);
+//prueba como creo que es
+app.get("/testing", (req, res) => {
+
+  req.logger.info("ingresando a un proceso de testeo");
+
+  req.logger.error({
+    message: "ingresando a un proceso de testeo",
+    Date: new Date().toLocaleTimeString(),
+    stack: JSON.stringify(error.stack, null, 2),
+  });
+
+  req.logger.info(
+    "Bienvenido: " +
+    new Date().toLocaleTimeString() +
+    new Date().getUTCMilliseconds()
+  );
+
+  try {
+    gdfshjsdjgsjdfgjsdgfjhdsgfgjhsgjhsgdf();
+  } catch (error) {
+    req.logger.debug({
+      message: "usuario aún sin loguear",
+      Date: new Date().toLocaleTimeString(),
+    });
+  }
+
+  try {
+    gdfshjsdjgsjdfgjsdgfjhdsgfgjhsgjhsgdf();
+  } catch (error) {
+    req.logger.warn({
+      message: error.message,
+      Date: new Date().toLocaleTimeString(),
+    });
+  }
+
+  try {
+    sdfsdgsfd();
+  } catch (error) {
+    req.logger.error({
+      message: error.message,
+      Date: new Date().toLocaleTimeString(),
+      stack: JSON.stringify(error.stack, null, 2),//La propiedad "stack" contiene una representación en 
+      //cadena de la pila de seguimiento que muestra la serie de funciones llamadas desde el 
+      //punto donde se originó el error hasta el punto donde se detectó.
+    });
+    return res
+      .status(400)
+      .json({ msg: "something important went wrong no continue" });
+  }
+
+  res.send({ message: "fin del proceso heavy exito!!!" });
 });
 
 app.use(erroHandler);

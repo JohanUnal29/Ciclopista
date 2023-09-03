@@ -7,22 +7,29 @@ import './Navbar.css';
 import LoginWidget from '../../login/LoginWidget.jsx';
 import Swal from 'sweetalert2';
 
+import firebaseApp from "../../../firebase/Credentials.js";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
+
 export default function NavBar() {
 
     const [userLogin, setUserLogin] = useState([]);
     const [veri, setVeri] = useState(false);
+    const [user, setUser] = useState(null);
 
     const logout = async () => {
 
         try {
             axios.get("/api/sessionsGoogle/logout").then(res => {
                 Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '¡Adiós!, sesión finalizada',
-            showConfirmButton: false,
-            timer: 1500
-          })
+                    position: 'center',
+                    icon: 'success',
+                    title: '¡Adiós!, sesión finalizada',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 setUserLogin([]);
                 setVeri(false);
             }).catch(err => {
@@ -51,6 +58,37 @@ export default function NavBar() {
         })
     }, [])
 
+    async function getRol(uid) {
+        const docuRef = doc(firestore, `usuarios/${uid}`);
+        const docuCifrada = await getDoc(docuRef);
+        const infoFinal = docuCifrada.data().rol;
+        return infoFinal;
+    }
+
+    function setUserWithFirebaseAndRol(usuarioFirebase) {
+        getRol(usuarioFirebase.uid).then((rol) => {
+            const userData = {
+                uid: usuarioFirebase.uid,
+                email: usuarioFirebase.email,
+                rol: rol,
+            };
+            setUser(userData);
+            console.log("gonorrea fianl", userData.rol.toString());
+        });
+    }
+
+    onAuthStateChanged(auth, (usuarioFirebase) => {
+        if (usuarioFirebase) {
+            //funcion final
+
+            if (!user) {
+                setUserWithFirebaseAndRol(usuarioFirebase);
+            }
+        } else {
+            setUser(null);
+        }
+    });
+
     return (
         <Navbar className="nav-grande2 sticky-top" bg="" expand="lg">
             <Container fluid style={{ paddingLeft: '100px', paddingRight: '100px' }}>
@@ -74,11 +112,11 @@ export default function NavBar() {
                         <Nav.Link><CartWidget /></Nav.Link>
                         {/* <Nav.Link><CartWidget></CartWidget></Nav.Link> */}
                         {
-                            veri === false &&
+                            (veri === false && user === null) &&
                             <Nav.Link><LoginWidget /></Nav.Link>
                         }
                         {
-                            veri === true &&
+                            (veri === true || user) &&
                             <NavDropdown title="Cuenta" id="basic-nav-dropdown">
                                 <Nav.Link><Link className="Menu" to="/">Perfil</Link></Nav.Link>
                                 {
@@ -86,7 +124,15 @@ export default function NavBar() {
                                     <Nav.Link><Link className="Menu" to="/orders">Administrador</Link></Nav.Link>
                                 }
                                 <NavDropdown.Divider />
-                                <Nav.Link onClick={logout}><p className="Cerrar" >Cerrar Sesión</p></Nav.Link>
+
+                                {(veri === true && user === null) &&
+                                    <Nav.Link onClick={logout}><p className="Cerrar" >Cerrar Sesión</p></Nav.Link>
+                                }
+
+                                {(veri === false && user) &&
+                                    <Nav.Link onClick={() => signOut(auth)}><p className="Cerrar" >Cerrar Sesión FB</p></Nav.Link>
+                                }
+                                
                             </NavDropdown>
                         }
                     </Nav>

@@ -1,0 +1,9 @@
+.Olvidar{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.Olvidar:hover{
+    color: red;
+}

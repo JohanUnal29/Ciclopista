@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./src/app.js PROD",
+    "start": "nodemon -e yaml,js ./src/app.js PROD",
     "dev": "nodemon ./src/app.js DEV"
   },
   "keywords": [],
@@ -27,6 +27,8 @@
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0",
     "winston": "^3.10.0"
   }

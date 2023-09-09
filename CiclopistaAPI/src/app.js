@@ -15,10 +15,27 @@ import cors from 'cors';
 import { entorno } from './config.js';
 import erroHandler from "./middlewares/error.js";
 import { addLogger } from './utils/logger.js';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
+app.use(addLogger);
 const port = entorno.PORT;
 app.use(cors());
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.1",
+    info: {
+      title: "Documentacion Ciclopista",
+      description: "Este proyecto va dirigido a la empresa Importaciones Ciclopista",
+    },
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`],
+};
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 const httpServer = app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`);
@@ -38,6 +55,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use(
   session({
@@ -66,51 +85,36 @@ app.get('*', (req, res) => {
   });
 });
 
-app.use(addLogger);
+
 //prueba como creo que es
 app.get("/testing", (req, res) => {
-
-  req.logger.info("ingresando a un proceso de testeo");
-
-  req.logger.error({
-    message: "ingresando a un proceso de testeo",
-    Date: new Date().toLocaleTimeString(),
-    stack: JSON.stringify(error.stack, null, 2),
-  });
+  req.logger.info("ingresando a un proceso importante");
 
   req.logger.info(
-    "Bienvenido: " +
-    new Date().toLocaleTimeString() +
-    new Date().getUTCMilliseconds()
+    "PASO 1: " +
+      new Date().toLocaleTimeString() +
+      new Date().getUTCMilliseconds()
   );
-
-  try {
-    gdfshjsdjgsjdfgjsdgfjhdsgfgjhsgjhsgdf();
-  } catch (error) {
-    req.logger.debug({
-      message: "usuario aún sin loguear",
-      Date: new Date().toLocaleTimeString(),
-    });
-  }
-
   try {
     gdfshjsdjgsjdfgjsdgfjhdsgfgjhsgjhsgdf();
   } catch (error) {
     req.logger.warn({
       message: error.message,
-      Date: new Date().toLocaleTimeString(),
     });
   }
+
+  req.logger.info(
+    "PASO 2: " +
+      new Date().toLocaleTimeString() +
+      new Date().getUTCMilliseconds()
+  );
 
   try {
     sdfsdgsfd();
   } catch (error) {
     req.logger.error({
       message: error.message,
-      Date: new Date().toLocaleTimeString(),
-      stack: JSON.stringify(error.stack, null, 2),//La propiedad "stack" contiene una representación en 
-      //cadena de la pila de seguimiento que muestra la serie de funciones llamadas desde el 
-      //punto donde se originó el error hasta el punto donde se detectó.
+      stack: JSON.stringify(error.stack, null, 2),
     });
     return res
       .status(400)

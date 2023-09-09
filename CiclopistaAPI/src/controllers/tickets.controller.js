@@ -20,10 +20,10 @@ class TicketController {
                     code: EErros.DATABASES_READ_ERROR,
                 });
 
-                req.logger.warn({
-                    message: "Tickets was not found",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.warn({
+                //     message: "Tickets was not found",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
             }
 
             return res.send({
@@ -39,12 +39,12 @@ class TicketController {
                 code: EErros.DATABASES_READ_ERROR,
             });
 
-            req.logger.error({
-                message: "An error occurred while fetching tickets",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while fetching tickets",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
         }
     }
 
@@ -61,10 +61,10 @@ class TicketController {
                     code: EErros.DATABASES_READ_ERROR,
                 });
 
-                req.logger.debug({
-                    message: "Ticket was not found",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.debug({
+                //     message: "Ticket was not found",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
             }
 
             return res.send({
@@ -80,12 +80,12 @@ class TicketController {
                 code: EErros.DATABASES_READ_ERROR,
             });
 
-            req.logger.error({
-                message: "An error occurred while fetching ticket by ID",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while fetching ticket by ID",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
         }
     }
 
@@ -101,10 +101,10 @@ class TicketController {
                     message: "Tickets was not found",
                     code: EErros.DATABASES_READ_ERROR,
                 });
-                req.logger.debug({
-                    message: "Ticket was not found",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.debug({
+                //     message: "Ticket was not found",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
             }
 
             return res.send({
@@ -120,12 +120,12 @@ class TicketController {
                 code: EErros.DATABASES_READ_ERROR,
             });
 
-            req.logger.error({
-                message: "An error occurred while fetching ticket by status",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while fetching ticket by status",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
 
         }
     }
@@ -150,10 +150,10 @@ class TicketController {
                     updatedCart.push(cartItem);
                 } else {
 
-                    req.logger.debug({
-                        message: `Product with ID ${cartItem._id} is out of stock or not found.`,
-                        Date: new Date().toLocaleTimeString(),
-                    });
+                    // req.logger.debug({
+                    //     message: `Product with ID ${cartItem._id} is out of stock or not found.`,
+                    //     Date: new Date().toLocaleTimeString(),
+                    // });
 
                     return res.status(400).send({
                         status: "error",
@@ -174,10 +174,10 @@ class TicketController {
             return res.send({ status: "OK", message: "Ticket successfully added" });
         } catch (error) {
 
-            req.logger.debug({
-                message: `Product with ID ${cartItem._id} is out of stock or not found.`,
-                Date: new Date().toLocaleTimeString(),
-            });
+            // req.logger.debug({
+            //     message: `Product with ID ${cartItem._id} is out of stock or not found.`,
+            //     Date: new Date().toLocaleTimeString(),
+            // });
 
             return res.status(400).send({
                 status: "error",
@@ -203,10 +203,10 @@ class TicketController {
 
             if (!updatedTicket) {
 
-                req.logger.debug({
-                    message: "Ticket was not found",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.debug({
+                //     message: "Ticket was not found",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
 
                 CustomError.createError({
                     name: "Error-update-ticket",
@@ -221,12 +221,12 @@ class TicketController {
                 message: "Ticket successfully updated",
             });
         } catch (error) {
-            req.logger.error({
-                message: "An error occurred while updating ticket",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while updating ticket",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
             CustomError.createError({
                 name: "Error-update-ticket",
                 cause: error,
@@ -243,10 +243,10 @@ class TicketController {
 
             if (!deletedTicket) {
 
-                req.logger.debug({
-                    message: "Ticket does not exists",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.debug({
+                //     message: "Ticket does not exists",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
 
                 CustomError.createError({
                     name: "Error-delete-ticket",
@@ -259,12 +259,12 @@ class TicketController {
             return res.send({ status: "OK", message: "Ticket deleted successfully" });
         } catch (error) {
 
-            req.logger.error({
-                message: "An error occurred while deleting ticket",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while deleting ticket",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
 
             CustomError.createError({
                 name: "Error-delete-ticket",
@@ -281,10 +281,10 @@ class TicketController {
             const userWithOrders = await ticketService.getTicketsByUser(userEmail);
 
             if (!userEmail) {
-                req.logger.debug({
-                    message: "User does not exists",
-                    Date: new Date().toLocaleTimeString(),
-                });
+                // req.logger.debug({
+                //     message: "User does not exists",
+                //     Date: new Date().toLocaleTimeString(),
+                // });
 
                 CustomError.createError({
                     name: "Error-user",
@@ -301,17 +301,17 @@ class TicketController {
             });
         } catch (error) {
 
-            req.logger.error({
-                message: "An error occurred while fetching ticket by ID",
-                cause: error,
-                Date: new Date().toLocaleTimeString(),
-                stack: JSON.stringify(error.stack, null, 2),
-            });
+            // req.logger.error({
+            //     message: "An error occurred while fetching ticket by ID",
+            //     cause: error,
+            //     Date: new Date().toLocaleTimeString(),
+            //     stack: JSON.stringify(error.stack, null, 2),
+            // });
 
             CustomError.createError({
                 name: "Error-user",
                 cause: error,
-                message: "An error occurred while fetching ticket by ID",
+                message: "An error occurred while fetching ticket by Email",
                 code: EErros.DATABASES_READ_ERROR,
             });
         }

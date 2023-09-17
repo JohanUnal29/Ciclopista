@@ -9,7 +9,7 @@ router.get("/", productController.getPaginatedProducts);
 router.get("/all", productController.getProducts);
 router.get("/:category", productController.getProductsByCategory);
 router.get("/id/:pid", productController.getProductById);
-router.post("/addproduct", checkAdmin, productValidator, productController.addProduct);
+router.post("/addproduct", checkAdmin, productValidator, productController.addProduct);//quitar el check admin para test
 router.put("/:pid", checkAdmin, productController.updateProduct);
 router.delete("/:pid", checkAdmin, productController.deleteProduct);
 

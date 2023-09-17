@@ -1,3 +1,5 @@
+//@ts-check
+
 import winston from "winston";
 import { entorno } from "../config.js";
 
@@ -28,6 +30,7 @@ export const addLogger = (req, res, next) => {
 
     if(entorno.MODE=="PROD"){
         req.logger = loggerProd;
+        
     }else{
         req.logger = loggerDev;
     }

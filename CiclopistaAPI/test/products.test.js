@@ -5,10 +5,42 @@ import { faker } from '@faker-js/faker';
 const expect = chai.expect;
 const requester = supertest('http://127.0.0.1:5000');
 
-//title, description, code(str), price(number), status(boolean), stock(number), category(str), subCategory(str), thumbnails(str)
-
 describe('Testing products', () => {
-    //quitar el check admin en app.js para test
+    
+
+    describe('Consultar todos los productos', () => {
+        it('GET /api/products/all', async () => {
+    
+          const response = await requester.get('/api/products/all');
+          const { status, ok, _body } = response;
+    
+          console.log(_body.payload);
+        }); 
+      });
+
+    describe('Consultar producto por categoria', () => {
+        it('GET /api/products/:category', async () => {
+          const category = 'Pachas'; 
+          
+          const response = await requester.get(`/api/products/${category}`);
+          const { status, ok, _body } = response;
+          
+          console.log(_body.payload);
+        }); 
+      });
+      
+      describe('Consultar producto por ID', () => {
+        it('GET /api/products/id/:pid', async () => {
+          const productId = '64fbfcea8672cdd671a53dbb'; 
+          
+          const response = await requester.get(`/api/products/id/${productId}`);
+          const { status, ok, _body } = response;
+          
+          console.log(_body.payload);
+        }); 
+      });
+
+    //quitar el check admin en product.router.js para test
     describe('Creación de productos', () => {
       it('En endpoint POST /api/products/addproduct debe crear productos', async () => {
         
@@ -40,87 +72,39 @@ describe('Testing products', () => {
       }); 
     }); 
 
-    // describe('Consultar todos los productos', () => {
-    //     it('GET /api/products/all', async () => {
-    
-    //       const response = await requester.get('/api/products/all');
-    //       const { status, ok, _body } = response;
-    
-    //       console.log(_body.payload);
-    //     }); 
-    //   });
+    describe('Edición de producto por ID', () => {
+      it('En endpoint PUT /api/products/:pid debe editar el producto por ID', async () => {
 
-    //   describe('Consultar producto por categoria', () => {
-    //     it('GET /api/products/:category', async () => {
-    //       const category = 'Pachas'; 
-          
-    //       const response = await requester.get(`/api/products/${category}`);
-    //       const { status, ok, _body } = response;
-          
-    //       console.log(_body.payload);
-    //     }); 
-    //   });
-      
-    //   describe('Consultar producto por ID', () => {
-    //     it('GET /api/products/id/:id', async () => {
-    //       const productId = '64fbfcea8672cdd671a53dbb'; 
-          
-    //       const response = await requester.get(`/api/products/id/${productId}`);
-    //       const { status, ok, _body } = response;
-          
-    //       console.log(_body.payload);
-    //     }); 
-    //   });
-
-    /* describe('Registro, Login and Current', () => {
-      let cookieName;
-      let cookieValue;
-      const mockUser = {
-        first_name: 'Maximo',
-        last_name: 'Lorenzo',
-        email: faker.internet.email(),
-        password: '123',
-      };
+        const productID = '65068b7d089d6155f0da1487'; 
+        
+        const productMock = {
+          title: 'Llanta MTB CP rin 26 de taco EDITADA',
+          description: 'Llanta económica y confiable EDITADA',
+          code: '1098902',
+          price: 25000,
+          status: true,
+          stock: 120,
+          category: "Llantas",
+          subCategory: "Llantas_26",
+          thumbnails: "xxxdfdsewsawasdasd",
+        };
   
-      it('Debe registrar un usuario', async () => {
-        const { _body } = await requester.post('/api/sessions/register').send(mockUser);
-        expect(_body.payload).to.be.ok;
+        const response = await requester.put(`/api/products/${productID}`).send(productMock);
+        const { status, ok, _body } = response;
+  
+        expect(ok).to.be.true;
       });
   
-      it('Debe loggear un user y DEVOLVER UNA COOKIE', async () => {
-        const result = await requester.post('/api/sessions/login').send({
-          email: mockUser.email,
-          password: mockUser.password,
+    }); 
+
+    describe('Eliminar producto por ID', () => {
+          it('DELETE /api/products/:pid', async () => {
+            const productID = '65068b7d089d6155f0da1487'; 
+            
+            const response = await requester.delete(`/api/products/${productID}`);
+            const { status, ok, _body } = response;
+            
+            expect(ok).to.be.true;
+          }); 
         });
-  
-        const cookie = result.headers['set-cookie'][0];
-        expect(cookie).to.be.ok;
-  
-        cookieName = cookie.split('=')[0];
-        cookieValue = cookie.split('=')[1];
-  
-        expect(cookieName).to.be.ok.and.eql('coderCookie');
-        expect(cookieValue).to.be.ok;
-      });
-  
-      it('Enviar cookie para ver el contenido del user', async () => {
-        const { _body } = await requester.get('/api/sessions/current').set('Cookie', [`${cookieName}=${cookieValue}`]);
-        expect(_body.payload.email).to.be.eql(mockUser.email);
-      });
-    }); */
-    // describe('Test upload file', () => {
-    //   it('Debe subir un archivo al crear pets', async () => {
-    //     const petMock = {
-    //       name: 'Firulais',
-    //       specie: 'goat',
-    //       birthDate: '10-10-2020',
-    //     };
-  
-    //     const result = await requester.post('/api/pets/withimage').field('name', petMock.name).field('specie', petMock.specie).field('birthDate', petMock.birthDate).attach('image', './test/house.jpg');
-  
-    //     expect(result.status).to.be.eql(200);
-    //     expect(result._body.payload).to.have.property('_id');
-    //     expect(result._body.payload.image).to.be.ok;
-    //   });
-    // });
   });

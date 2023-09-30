@@ -19,7 +19,7 @@ const Product = ({ product }) => {
     }).catch(err => {
       console.log(err);
     })
-  }, [])
+  },)
 
   const deleteProduct = async (id) => {
 

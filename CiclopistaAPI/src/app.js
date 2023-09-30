@@ -7,6 +7,7 @@ import MongoStore from 'connect-mongo';
 import productRouter from "./routes/product.router.js";
 import mockingproducts from "./routes/mockingproducts.router.js"
 import ticketsRouter from "./routes/tickets.router.js";
+import userProfileRouter from "./routes/userProfile.router.js";
 import { sessionGoogleRouter } from './routes/sessionGoogle.router.js';
 import passport from 'passport';
 import { iniPassport } from './utils/passport.config.js';
@@ -74,17 +75,11 @@ app.use(passport.session());
 app.use('/api/products', productRouter);
 app.use('/api/purchase', ticketsRouter);
 app.use('/api/sessionsGoogle', sessionGoogleRouter);
+app.use('/api/userProfile', userProfileRouter);
+
+
 
 app.use('/mockingproducts', mockingproducts);
-
-app.get('*', (req, res) => {
-  return res.status(404).json({
-    status: 'error',
-    msg: 'no encontrado',
-    data: {},
-  });
-});
-
 
 //prueba como creo que es
 app.get("/testing", (req, res) => {
@@ -124,4 +119,14 @@ app.get("/testing", (req, res) => {
   res.send({ message: "fin del proceso heavy exito!!!" });
 });
 
+app.get('*', (req, res) => {
+  return res.status(404).json({
+    status: 'error',
+    msg: 'no encontrado',
+    data: {},
+  });
+});
+
 app.use(erroHandler);
+
+

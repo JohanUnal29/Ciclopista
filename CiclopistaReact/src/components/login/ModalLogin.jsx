@@ -24,7 +24,7 @@ export default function ModalLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rol, setRol] = useState("user");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [passwordReset, setPasswordReset] = useState(false);
   const [emailPasswordReset, setEmailPasswordReset] = useState("");
 
@@ -54,7 +54,7 @@ export default function ModalLogin(props) {
         // Error: No se pudo enviar el correo electrónico de restablecimiento
         Swal.fire({
           position: 'center',
-          icon: 'success',
+          icon: 'error',
           title: 'Error al enviar el correo electrónico de restablecimiento',
           showConfirmButton: false,
           timer: 1500

@@ -85,7 +85,7 @@ export default function NavBar2() {
                         {
                             veri === true &&
                             <NavDropdown title="Cuenta" id="basic-nav-dropdown">
-                                <Nav.Link><Link className="Menu" to="/">Perfil</Link></Nav.Link>
+                                <Nav.Link><Link className="Menu" to="/ProfilePage">Perfil</Link></Nav.Link>
                                 {
                                     userLogin.rol == "admin" &&
                                     <Nav.Link><Link className="Menu" to="/orders">Administrador</Link></Nav.Link>

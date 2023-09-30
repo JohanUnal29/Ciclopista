@@ -36,12 +36,13 @@ paths:
               schema:
                 $ref: "#components/schemas/Tickets"
 
+  /api/purchase/{pid}:
     delete:
       summary: Eliminar un ticket por su ID
       tags:
         - Eliminar un ticket por su ID
       parameters:
-        - name: ticketId
+        - name: pid
           in: path
           required: true
           description: ID del ticket que se desea eliminar

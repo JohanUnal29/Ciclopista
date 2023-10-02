@@ -4,6 +4,7 @@ import { uploader } from "../utils/multer.js";
 
 const router = Router();
 
-router.post("/addprofileimage", uploader.single('file'), userProfileController.addProfileImage);
+router.post("/addprofileimage", userProfileController.addProfileImage);
+router.get("/email/:email", userProfileController.getImageByEmail);
 
 export default router;

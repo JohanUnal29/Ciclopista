@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export default function ProfileModal(props) {
   const [fileName, setFileName] = useState("Subir una imagen");
@@ -41,24 +42,44 @@ export default function ProfileModal(props) {
   };
 
   const handleUpdateProfilePic = () => {
-    if (!selectedFile)
-      return Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "¡Debes seleccionar una nueva imagen!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    try {
+      if (!selectedFile)
+        return Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "¡Debes seleccionar una nueva imagen!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
-    const imageDetails = {
-      email: props.usuarioRecibido.email,
-      selectedFile,
-    };
+      const imageDetails = {
+        email: props.email,
+        selectedFile,
+      };
 
-    console.log("imagen agregada: " + JSON.stringify(imageDetails));
-    //acá va el axios bro updateUser({ profilePic: selectedFile })
-
+      console.log("imagen agregada: " + JSON.stringify(imageDetails));
+      axios
+        .post("/api/userProfile/addprofileimage", imageDetails)
+        .then((res) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Imagen de perfil agregado",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            // Recargar la página después de que el usuario haya visto el mensaje de éxito
+            window.location.reload();
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      alert(error.message);
+    }
     props.onHide();
+    
   };
 
   return (
@@ -75,14 +96,20 @@ export default function ProfileModal(props) {
             onChange={handleFileChange}
           />
         </Form.Group>
-        <img 
-					className="img-fluid mt-2"
-					src={selectedFile}
-					alt="profile-previw"
-				/>
+        <img
+          className="img-fluid mt-2"
+          src={selectedFile}
+          alt="profile-previw"
+        />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={() => { props.onHide(); setSelectedFile(null); }}>
+        <Button
+          variant="danger"
+          onClick={() => {
+            props.onHide();
+            setSelectedFile(null);
+          }}
+        >
           Cancelar
         </Button>
         <Button variant="primary" onClick={handleUpdateProfilePic}>

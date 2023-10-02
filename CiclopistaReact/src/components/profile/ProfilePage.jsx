@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import firebaseApp from "../../firebase/Credentials";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import NavBarProfile from "../subcomponents/navbar/NavbarProfile";
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
@@ -16,6 +17,7 @@ export default function ProfilePage() {
   const [userLogin, setUserLogin] = useState([]);
   const [veri, setVeri] = useState(false);
   const [user, setUser] = useState(null);
+  const [profileImage, setProfileImage] = useState();
 
   async function getName(uid) {
     const docuRef = doc(firestore, `usuarios/${uid}`);
@@ -46,6 +48,7 @@ export default function ProfilePage() {
             firstName: name, // Actualiza el nombre con el valor obtenido
           };
           setUser(userData);
+
           // Almacena el nombre en el estado
         });
       } else {
@@ -61,19 +64,36 @@ export default function ProfilePage() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    // Verifica si hay un valor en userLogin.email o user.email antes de hacer la solicitud
+    if (userLogin?.email || user?.email) {
+      axios
+        .get(`/api/userProfile/email/${userLogin?.email || user?.email}`)
+        .then((res) => {
+          setProfileImage(res.data.payload);
+          console.log("chamo ", res.data.payload);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [userLogin?.email, user?.email]);
+
   return (
     <>
+    <NavBarProfile/>
       <Container>
         <Row className="mt-4">
           <Col xs={12} className="text-center">
             <ProfileModal
               show={modalShow}
               onHide={() => setModalShow(false)}
-              usuarioRecibido={userLogin || user}
+              email={userLogin?.email || user?.email}
             />
             <div className="Menu" onClick={() => setModalShow(true)}>
               <img
                 src={
+                  profileImage?.selectedFile ||
                   "https://drive.google.com/uc?export=download&id=1_nY7URDJHMJruyMsUjerTNhRZqhNNFoR"
                 }
                 alt="profile"
@@ -89,17 +109,17 @@ export default function ProfilePage() {
             </div>
           </Col>
           <Col className="mt-4">
-          <Card style={{ maxWidth: "360px" }} className="mx-auto p-4">
-            <p className="text-center">
-              <b>Nombre: </b>
-              {userLogin?.firstName || user?.firstName || "Cargando datos..."}
-            </p>
-            <p className="text-center">
-              <b>Correo: </b>
-              {userLogin?.email || user?.email || "Cargando datos..."}
-            </p>
-          </Card>
-        </Col>
+            <Card style={{ maxWidth: "360px" }} className="mx-auto p-4">
+              <p className="text-center">
+                <b>Nombre: </b>
+                {userLogin?.firstName || user?.firstName || "Cargando datos..."}
+              </p>
+              <p className="text-center">
+                <b>Correo: </b>
+                {userLogin?.email || user?.email || "Cargando datos..."}
+              </p>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </>

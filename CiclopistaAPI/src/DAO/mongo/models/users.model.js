@@ -9,7 +9,6 @@ const schema = new Schema({
   email: { type: String, required: true, max: 100, unique: true },
   age: { type: Number, required: false },
   rol: { type: String, default: 'user', required: true },
-  profileImage: { type: String, default: ''},
   tickets: {
     type: [
       {

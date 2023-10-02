@@ -4,24 +4,13 @@ const ordersCollection = "profileImages";
 
 const ordersSchema = mongoose.Schema({
 
-  filename: {
+  email: {
     type: String,
     required: true,
+    // unique: true, // Asegura que el correo electrónico sea único
   },
-  contentType: {
+  selectedFile: {
     type: String,
-    required: true,
-  },
-  length: {
-    type: Number,
-    required: true,
-  },
-  uploadDate: {
-    type: Date, //pillar si lo hacemos como el ticket
-    required: true,
-  },
-  Data: {
-    type: Buffer,
     required: true,
   },
 });

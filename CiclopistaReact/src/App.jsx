@@ -31,6 +31,7 @@ function App() {
             <Route path="/orderr/:id" element={<OrderDetailContainer/>} />
             <Route path="/checkout" element={<Checkout/>} />
             <Route path="/ProfilePage" element={<ProfilePage/>}/>
+            
             {/* <Route path="/carrito" element={<Carrito />} /> */}
             {/* <Route exact path='/adopta' element={<ItemListContainer />} />
           <Route path="/adopta/:categoria" element={<ItemListContainer />} />

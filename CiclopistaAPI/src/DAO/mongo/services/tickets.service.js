@@ -22,13 +22,6 @@ class TicketService {
         message: "An error occurred while adding the ticket",
         code: EErros.DATABASES_READ_ERROR,
       });
-
-      req.logger.error({
-        message: "An error occurred while adding the ticket IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -43,13 +36,6 @@ class TicketService {
         message: "An error occurred while fetching tickets",
         code: EErros.DATABASES_READ_ERROR,
       });
-
-      req.logger.error({
-        message: "An error occurred while fetching tickets IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -63,13 +49,6 @@ class TicketService {
         cause: error,
         message: "An error occurred while fetching ticket by ID",
         code: EErros.DATABASES_READ_ERROR,
-      });
-
-      req.logger.error({
-        message: "An error occurred while fetching ticket by ID IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };
@@ -87,13 +66,6 @@ class TicketService {
         message: "An error occurred while fetching ticket by Email",
         code: EErros.DATABASES_READ_ERROR,
       });
-
-      req.logger.error({
-        message: "An error occurred while fetching ticket by Email IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -108,12 +80,6 @@ class TicketService {
         message: "An error occurred while deleting ticket",
         code: EErros.DATABASES_READ_ERROR,
       });
-      req.logger.error({
-        message: "An error occurred while deleting ticket IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -127,12 +93,6 @@ class TicketService {
         cause: error,
         message: "An error occurred while updating ticket",
         code: EErros.DATABASES_READ_ERROR,
-      });
-      req.logger.error({
-        message: "An error occurred while updating ticket IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };
@@ -152,12 +112,6 @@ class TicketService {
         message: "An error occurred while updating products",
         code: EErros.DATABASES_READ_ERROR,
       });
-      req.logger.error({
-        message: "An error occurred while updating products IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -171,13 +125,6 @@ class TicketService {
         cause: error,
         message: "An error occurred while fetching ticket by status",
         code: EErros.DATABASES_READ_ERROR,
-      });
-
-      req.logger.error({
-        message: "An error occurred while fetching ticket by status IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };

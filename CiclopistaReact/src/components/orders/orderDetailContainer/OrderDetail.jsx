@@ -11,8 +11,6 @@ const OrderDetail = ({ order }) => {
 
   const [status, setStatus] = useState();
 
-  console.log(status)
-
   const uptadeOder = async (id) => {
 
     try {
@@ -63,6 +61,29 @@ const OrderDetail = ({ order }) => {
             </select>
               <Button variant="success" onClick={() => uptadeOder(order._id)}>Actualizar Estado</Button>
             </td>
+          </tr>
+        </tbody>
+      </Table>
+      
+      
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            
+            <th>Departamento</th>
+            <th>Ciudad o Municipio o Localidad</th>
+            <th>Barrio</th>
+            <th>Dirección</th>
+            <th>Referencias del lugar de entrega</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{order.departamento}</td>
+            <td>{order.ciudad_o_municipio}</td>
+            <td>{order.barrio}</td>
+            <td>{order.direccion}</td>
+            <td>{order.referencias_entrega}</td>
           </tr>
         </tbody>
       </Table>

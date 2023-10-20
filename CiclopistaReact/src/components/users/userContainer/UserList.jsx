@@ -1,19 +1,19 @@
 import React from 'react'
-import Order from "./Order";
-import "./Order.css";
+import User from './User';
+import "./User.css";
 import { Container, Row } from 'react-bootstrap';
 
-const OrdeList = ( {orders} ) => {
+const UserList = ( {users} ) => {
   
   return (
     <Container>
       <Row className="justify-content-center">
-        {orders.map((order) => (
-          <Order key={order._id} order={order} />
+        {users.map((user) => (
+          <User key={user._id} user={user} />
         ))}
       </Row>
     </Container>
   )
 }
 
-export default OrdeList
+export default UserList

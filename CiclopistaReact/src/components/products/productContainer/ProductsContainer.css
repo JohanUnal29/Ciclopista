@@ -10,3 +10,19 @@
     color: white;
     background-color: black;
 }
+
+.pagination-red .page-link {
+    color: red;
+}
+
+.pagination-red .page-item.active .page-link {
+    background-color: red;
+    border-color: red;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}

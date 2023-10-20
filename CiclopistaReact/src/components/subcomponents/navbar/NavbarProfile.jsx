@@ -137,7 +137,11 @@ export default function NavBarProfile() {
                         Administrador
                       </Link>
                     </Nav.Link>
-                    <NavDropdown.Divider />
+                    <Nav.Link>
+                      <Link className="Menu" to="/UserManager">
+                        Roles
+                      </Link>
+                    </Nav.Link>
                   </>
                 )}
 

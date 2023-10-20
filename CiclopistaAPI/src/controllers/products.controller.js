@@ -6,10 +6,10 @@ import EErros from "../DAO/mongo/services/errors/enum.js";
 class ProductController {
   async getPaginatedProducts(req, res) {
     try {
-      const ITEMS_PER_PAGE = 20;
+      const ITEMS_PER_PAGE = 10;
       const page = req.query.page || 1;
 
-      // Put all your query params in here
+      // Put all your query params in here//
       const query = {};
       const products = await productService.getPaginatedProducts(
         page,

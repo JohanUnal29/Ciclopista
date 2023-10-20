@@ -150,11 +150,18 @@ export default function NavBar() {
                   </Link>
                 </Nav.Link>
                 {userLogin.rol == "admin" && (
-                  <Nav.Link>
-                    <Link className="Menu" to="/orders">
-                      Administrador
-                    </Link>
-                  </Nav.Link>
+                  <>
+                    <Nav.Link>
+                      <Link className="Menu" to="/orders">
+                        Administrador
+                      </Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                      <Link className="Menu" to="/UserManager">
+                        Roles
+                      </Link>
+                    </Nav.Link>
+                  </>
                 )}
                 <NavDropdown.Divider />
 

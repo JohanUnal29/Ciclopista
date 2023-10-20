@@ -151,22 +151,13 @@ class TicketController {
           await ticketService.updateProducts(cartItem._id, cartItem.cantidad);
           updatedCart.push(cartItem);
         } else {
-          // req.logger.debug({
-          //     message: `Product with ID ${cartItem._id} is out of stock or not found.`,
-          //     Date: new Date().toLocaleTimeString(),
-          // });
 
           return res.status(400).send({
             status: "error",
             error: "Error-add-product-to-the-cart",
             cause: `Product with ID ${cartItem._id} is out of stock or not found.`,
           });
-          // CustomError.createError({
-          //     name: "Error-add-product-to-the-cart",
-          //     cause: `Product with ID ${cartItem._id} is out of stock or not found.`,
-          //     message: `Product with ID ${cartItem._id} is out of stock or not found.`,
-          //     code: EErros.ADDPRODUCT_TO_CART_ERORR,
-          // });
+       
         }
       }
 
@@ -174,10 +165,6 @@ class TicketController {
       await ticketService.addTicket(ticketDTO);
       return res.send({ status: "OK", message: "Ticket successfully added" });
     } catch (error) {
-      // req.logger.debug({
-      //     message: `Product with ID ${cartItem._id} is out of stock or not found.`,
-      //     Date: new Date().toLocaleTimeString(),
-      // });
 
       return res.status(400).send({
         status: "error",
@@ -185,12 +172,6 @@ class TicketController {
         cause: `Product with ID is out of stock or not found.`,
       });
 
-      // CustomError.createError({
-      //     name: "Error-add-product-to-the-cart",
-      //     cause: `Product is out of stock or not found.`,
-      //     message: `Product with ID is out of stock or not found.`,
-      //     code: EErros.ADDPRODUCT_TO_CART_ERORR,
-      // });
     }
   }
 

@@ -13,6 +13,11 @@ export default class TicketDTO {
         this.purchaser = ticket.purchaser;
         this.phone = ticket.phone;
         this.message = ticket.message;
+        this.departamento = ticket.departamento;
+        this.ciudad_o_municipio = ticket.ciudad_o_municipio;
+        this.barrio = ticket.barrio;
+        this.direccion = ticket.direccion;
+        this.referencias_entrega = ticket.referencias_entrega;
         this.cart = cart.map(item => ({
             _id: item._id,
             title: item.title,

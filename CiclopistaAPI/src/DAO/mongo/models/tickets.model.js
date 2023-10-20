@@ -28,6 +28,26 @@ const ordersSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  departamento: { 
+    type: String,
+    required: true,
+  },
+  ciudad_o_municipio: {
+    type: String,
+    required: true,
+  },
+  barrio: {
+    type: String,
+    required: true,
+  },
+  direccion: {
+    type: String,
+    required: true,
+  },
+  referencias_entrega: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     default: "pendiente",

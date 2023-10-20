@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import "./profile.css";
+
 import firebaseApp from "../../firebase/Credentials";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import NavBarProfile from "../subcomponents/navbar/NavbarProfile";
 const auth = getAuth(firebaseApp);
@@ -81,8 +84,15 @@ export default function ProfilePage() {
 
   return (
     <>
-    <NavBarProfile/>
       <Container>
+        <Button
+          variant="danger"
+          style={{ marginTop: '10px' }}
+        >
+          <Link className="link" to="/">
+            &lt; Inicio
+          </Link>
+        </Button>
         <Row className="mt-4">
           <Col xs={12} className="text-center">
             <ProfileModal

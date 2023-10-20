@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Col, Card, Button, Modal } from 'react-bootstrap';
 import "./ProductsContainer.css";
 import axios from "axios";
-import { FaThermometerEmpty } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const Product = ({ product }) => {
@@ -14,8 +13,6 @@ const Product = ({ product }) => {
   useEffect(() => {
     axios.get("/api/sessionsGoogle/user").then(res => {
       setUserLogin(res.data.payload);
-      console.log('sesión2');
-      console.log(userLogin);
     }).catch(err => {
       console.log(err);
     })
@@ -90,15 +87,10 @@ const Product = ({ product }) => {
     setThumbnails2("");
   };
 
-  console.log(category2);
-  console.log(subCategory2);
   const addProduct = async () => {
 
     try {
 
-
-      console.log(category2);
-      console.log(subCategory2);
       const add = {
         title: title2,
         description: description2,

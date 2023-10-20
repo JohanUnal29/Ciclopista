@@ -35,7 +35,7 @@ class ProductService {
         .limit(ITEMS_PER_PAGE)
         .skip(skip);
 
-      const [count, items] = await Promise.all([countPromise, itemsPromise]);
+      const [count, products] = await Promise.all([countPromise, itemsPromise]);
 
       const pageCount = count / ITEMS_PER_PAGE; // 400 items / 20 = 20
 
@@ -44,7 +44,7 @@ class ProductService {
           count,
           pageCount,
         },
-        items,
+        products,
       };
     } catch (error) {
       CustomError.createError({
@@ -52,13 +52,6 @@ class ProductService {
         cause: "Products was not found",
         message: "Products was not found",
         code: EErros.DATABASES_READ_ERROR,
-      });
-
-      req.logger.error({
-        message: "Products was not found IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };
@@ -74,13 +67,6 @@ class ProductService {
         message: "Error, failed to add the product",
         code: EErros.DATABASES_READ_ERROR,
       });
-
-      req.logger.error({
-        message: "Error, failed to add the product IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -95,12 +81,6 @@ class ProductService {
         message: "An error occurred while fetching product by ID",
         code: EErros.DATABASES_READ_ERROR,
       });
-      req.logger.error({
-        message: "An error occurred while fetching product by ID IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -114,13 +94,6 @@ class ProductService {
         cause: "An error occurred while fetching product by category",
         message: "An error occurred while fetching product by category",
         code: EErros.DATABASES_READ_ERROR,
-      });
-      req.logger.error({
-        message:
-          "An error occurred while fetching product by category IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };
@@ -139,12 +112,6 @@ class ProductService {
         message: "An error occurred while updating product",
         code: EErros.DATABASES_READ_ERROR,
       });
-      req.logger.error({
-        message: "An error occurred while updating product IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
-      });
     }
   };
 
@@ -158,12 +125,6 @@ class ProductService {
         cause: "An error occurred while deleting product",
         message: "An error occurred while deleting product",
         code: EErros.DATABASES_READ_ERROR,
-      });
-      req.logger.error({
-        message: "An error occurred while deleting product IN SERVICE",
-        cause: error,
-        Date: new Date().toLocaleTimeString(),
-        stack: JSON.stringify(error.stack, null, 2),
       });
     }
   };

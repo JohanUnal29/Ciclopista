@@ -7,7 +7,7 @@ import MongoStore from 'connect-mongo';
 import productRouter from "./routes/product.router.js";
 import mockingproducts from "./routes/mockingproducts.router.js"
 import ticketsRouter from "./routes/tickets.router.js";
-import userProfileRouter from "./routes/userProfile.router.js";
+// import userProfileRouter from "./routes/userProfile.router.js";
 import { sessionGoogleRouter } from './routes/sessionGoogle.router.js';
 import passport from 'passport';
 import { iniPassport } from './utils/passport.config.js';
@@ -19,10 +19,15 @@ import { addLogger } from './utils/logger.js';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
+import lastSessionRouter from "./routes/lastSession.router.js";
+import userManagerRouter from "./routes/userManager.router.js";
+import userProfileRouter from "./routes/userProfile.router.js";
+
 const app = express();
 app.use(addLogger);
 const port = entorno.PORT;
 app.use(cors());
+
 
 const swaggerOptions = {
   definition: {
@@ -75,9 +80,10 @@ app.use(passport.session());
 app.use('/api/products', productRouter);
 app.use('/api/purchase', ticketsRouter);
 app.use('/api/sessionsGoogle', sessionGoogleRouter);
+app.use('/api/lastSession', lastSessionRouter);
+app.use('/api/userManager',userManagerRouter);
+
 app.use('/api/userProfile', userProfileRouter);
-
-
 
 app.use('/mockingproducts', mockingproducts);
 

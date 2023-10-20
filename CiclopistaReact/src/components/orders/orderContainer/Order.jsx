@@ -13,6 +13,7 @@ const Order = ( {order} ) => {
             <Card.Title>{order.name}</Card.Title>
             <Card.Text>{order.purchaser}</Card.Text>
             <Card.Text>{order.phone}</Card.Text>
+            <Card.Text>{order.departamento}</Card.Text>
             <Card.Text>{order.amount}</Card.Text>
             <Button variant="primary" style={{ backgroundColor: 'black' }}>
               <Link to={`/orderr/${order._id}`} style={{ textDecoration: 'none', color: 'white' }}>Ver más</Link>
